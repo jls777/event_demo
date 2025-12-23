@@ -2,48 +2,32 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const { events_categories } = await import("../data/data.json");
+
   return (
     <div>
       <header>
         <nav>
-          <img src="" alt="" />
+          {/* <img src="" alt="" /> */}
           <Link href="/">Home</Link>
-          <a href="/events">Events</a>
-          <a href="/about-us">About Us</a>
+          <Link href="/events">Events</Link>
+          <Link href="/about-us">About Us</Link>
         </nav>
       </header>
       <main>
-        <a href="">
-          <img src="" alt="" />
-          <h2>Events in London</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            voluptatum rem officia aliquid omnis nulla porro velit dolor? Minima
-            esse saepe dignissimos corrupti quas quia voluptatibus blanditiis,
-            modi voluptatem laudantium.
-          </p>
-        </a>
-        <a href="">
-          <img src="" alt="" />
-          <h2>Events in San Francisco</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            voluptatum rem officia aliquid omnis nulla porro velit dolor? Minima
-            esse saepe dignissimos corrupti quas quia voluptatibus blanditiis,
-            modi voluptatem laudantium.
-          </p>
-        </a>
-        <a href="">
-          <img src="" alt="" />
-          <h2>Events in Barcelona</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            voluptatum rem officia aliquid omnis nulla porro velit dolor? Minima
-            esse saepe dignissimos corrupti quas quia voluptatibus blanditiis,
-            modi voluptatem laudantium.
-          </p>
-        </a>
+        {events_categories.map((event) => (
+          <Link key={event.id} href={`/events/${event.id}`}>
+            <Image
+              src={event.image}
+              alt={event.title}
+              width={200}
+              height={400}
+            />
+            <h2>{event.title}</h2>
+            <p>{event.description}</p>
+          </Link>
+        ))}
       </main>
     </div>
   );
